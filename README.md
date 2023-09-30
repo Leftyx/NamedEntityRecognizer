@@ -1,12 +1,11 @@
 # Named Entity Recognition (NER)
 
-This sample shows how to use a Bert/Distilbert based ONNX model for Token Classification / NER in ML.NET.
-
+This sample shows how to use a BERT/DistilBERT based ONNX model for Token Classification / NER in [ML.NET](https://dotnet.microsoft.com/en-us/apps/machinelearning-ai/ml-dotnet).
 
 ## Export a model to ONNX
 
-To export a Hugging Face model to ONNX you can follow the [instructions](https://huggingface.co/docs/optimum/exporters/onnx/usage_guides/export_a_model#exporting-a-model-to-onnx-using-the-cli) provided by Hugging Face
-or:
+To export a Hugging Face model to ONNX you can follow the [instructions](https://huggingface.co/docs/optimum/exporters/onnx/usage_guides/export_a_model#exporting-a-model-to-onnx-using-the-cli) 
+provided by Hugging Face or:
 
 Install Python
 
@@ -34,7 +33,7 @@ according to the model you want to use.
 
 For my tests I have used a multilingual cased model found [here](https://huggingface.co/dmargutierrez/distilbert-base-multilingual-cased-mapa_coarse-ner).
 
-This model does not have token type ids, hence the configuration:
+This model does not have *token type ids*, hence the configuration sets `HasTokenTypeIds` to *false* :
 
 ```c#
 var configuration = new Configuration(modelPath, numberOfTokens: 5)
@@ -43,21 +42,21 @@ var configuration = new Configuration(modelPath, numberOfTokens: 5)
 };
 ```
 
-You can use [Netron](https://netron.app/) to check the shape of the input/output of your ONNX model.
+You can use [Netron](https://netron.app/) to check the shape of the input/output of your ONNX model.  
 Once provided your model, select the `input_ids` node on the pane, and check the model properties.
 
 ![Netron](./Assets/bert-model.jpg)
 
 If your model has `token_type_ids` defined, simply set the configuration property to true.
 
-The folder where the ONNX model is exported should contain a bunch of file.
+The folder where the ONNX model is exported should contain a bunch of files.
 To run this example we need the configuration file `config.json` and the vocabulary `vocab.txt`.
 
 The console should show the result on the NER process:
 
 ```
  Wolfgang=B-PERSON
- Mu�ller=I-PERSON
+ Mu¨ller=I-PERSON
  Berlin=B-ADDRESS
  ,=I-ADDRESS
  Germany=I-ADDRESS
@@ -69,10 +68,10 @@ B- indicates the beginning of an entity.
 I- indicates a token is contained inside the same entity.
 ```
 
-If you want to find out more about the meaning of the token Hugging Face is a good source of [information](https://huggingface.co/learn/nlp-course/chapter7/2?fw=pt).
+If you want to find out more about the meaning of the tokens, Hugging Face is a good source of [information](https://huggingface.co/learn/nlp-course/chapter7/2?fw=pt).
 
-Different models might have differnt labels. You can see how many labels the model support and their name
-having a look at the `config.json` file:
+Different models might have differnt labels. 
+The configuration file `config.json` found in the folder where the models is downloaded will give you some information on the supported labels and their names:
 
 ```json
 "id2label": {

@@ -9,10 +9,12 @@
 
   <ItemGroup>
     <PackageReference Include="FastBertTokenizer" Version="0.3.29" />
-    <PackageReference Include="Microsoft.ML" Version="2.0.1" />
-    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.16.0" />
-    <PackageReference Include="Microsoft.ML.OnnxTransformer" Version="2.0.1" />
-    <PackageReference Include="Microsoft.ML.Tokenizers" Version="0.20.1" />
+    <PackageReference Include="Microsoft.ML" Version="3.0.0" />
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.16.3" />
+    <PackageReference Include="Microsoft.ML.OnnxTransformer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.ML.Tokenizers" Version="0.21.0" />
+    <PackageReference Include="libtorch-cpu-win-x64" Version="2.1.0.1" />
+    <PackageReference Include="Microsoft.ML.TorchSharp" Version="0.21.0" />
   </ItemGroup>
 
 </Project>

@@ -45,7 +45,7 @@ namespace NamedEntityRecognizer
 
             await tokenizer.LoadVocabularyAsync(vocabularyDocument, convertInputToLowercase: !_configuration.IsCasedModel);
 
-            var (inputIds, attentionMask, tokenTypeIds) = tokenizer.Tokenize(sentence, _configuration.MaximumNumberOfTokens);
+            var (inputIds, attentionMask, tokenTypeIds) = tokenizer.Encode(sentence, _configuration.MaximumNumberOfTokens);
 
             var tensorInputIds = TensorExtensions.ConvertToTensor(inputIds.ToArray(), inputIds.Length);
 

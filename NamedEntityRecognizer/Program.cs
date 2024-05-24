@@ -8,8 +8,8 @@ namespace NamedEntityRecognizer
         {
             CancellationTokenSource cancellationToken = new();
 
-            // var modelPath = @"<root_folder>\bert-base-NER";
-            var modelPath = @"<root_folder>\distilbert-base-multilingual-cased-mapa_coarse-ner";
+            var modelPath = @"D:\Development\__Experiments\_onnx-models\distilbert-base-multilingual-cased-mapa_coarse-ner";
+            // var modelPath = @"<root_folder>\distilbert-base-multilingual-cased-mapa_coarse-ner";
 
             var sentence = @"My name is Wolfgang Müller and I live in Berlin, Germany.";
 

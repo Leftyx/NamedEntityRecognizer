@@ -3,7 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamedEntityRecognizer", "NamedEntityRecognizer\NamedEntityRecognizer.csproj", "{72005B17-3291-4D26-A743-FB5C0F2C97AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NamedEntityRecognizer", "NamedEntityRecognizer\NamedEntityRecognizer.csproj", "{72005B17-3291-4D26-A743-FB5C0F2C97AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{B6E39243-D8AE-44CA-AFF1-2FEE78BD9A23}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

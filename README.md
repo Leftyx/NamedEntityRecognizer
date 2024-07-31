@@ -7,9 +7,9 @@ This sample shows how to use a BERT/DistilBERT based ONNX model for Token Classi
 To export a Hugging Face model to ONNX you can follow the [instructions](https://huggingface.co/docs/optimum/exporters/onnx/usage_guides/export_a_model#exporting-a-model-to-onnx-using-the-cli) 
 provided by Hugging Face or:
 
-Install Python
+- Install Python
 
-run these scripts: 
+- Run these scripts: 
 
 
 ```shell
@@ -18,7 +18,7 @@ pip install optimum[exporters]
 pip install accelerate
 ```
 
-and finally use the CLI tool `optimum-cli` to export the model:
+- and finally use the CLI tool `optimum-cli` to export the model:
 
 ```shell
 optimum-cli export onnx --model dslim/bert-base-NER bert-base-NER/
@@ -68,10 +68,10 @@ B- indicates the beginning of an entity.
 I- indicates a token is contained inside the same entity.
 ```
 
-If you want to find out more about the meaning of the tokens, Hugging Face is a good source of [information](https://huggingface.co/learn/nlp-course/chapter7/2?fw=pt).
+If you want to find out more about the meaning of these tokens, Hugging Face is a good source of [information](https://huggingface.co/learn/nlp-course/chapter7/2?fw=pt).
 
-Different models might have differnt labels. 
-The configuration file `config.json` found in the folder where the models is downloaded will give you some information on the supported labels and their names:
+Different models might have different labels. 
+The configuration file `config.json` found in the folder where the model is downloaded, will give you some information on the supported labels and their names:
 
 ```json
 "id2label": {

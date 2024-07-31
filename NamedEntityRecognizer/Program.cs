@@ -1,33 +1,33 @@
-﻿using NamedEntityRecognizer.Models;
+using NamedEntityRecognizer.Models;
 
-namespace NamedEntityRecognizer
+namespace NamedEntityRecognizer;
+
+internal class Program
 {
-    internal class Program
-    {
-        static async Task Main(string[] args)
-        {
-            CancellationTokenSource cancellationToken = new();
+   static async Task Main()
+   {
+      CancellationTokenSource cancellationToken = new();
 
-            var modelPath = @"<root_folder>\distilbert-base-multilingual-cased-mapa_coarse-ner";
+      // Your model path here 
+      var modelPath = @"<root_folder>\distilbert-base-multilingual-cased-mapa_coarse-ner";
 
-            var sentence = @"My name is Wolfgang Müller and I live in Berlin, Germany.";
+      var sentence = @"My name is Wolfgang Müller and I live in Berlin, Germany.";
 
-            var configuration = new Configuration(modelPath, numberOfTokens: 5)
-            {
-                HasTokenTypeIds = false
-            };
+      var configuration = new Configuration(modelPath, numberOfTokens: 5)
+      {
+         HasTokenTypeIds = false
+      };
 
-            var result = await new NerProcessor(configuration)
-                                .ProcessAsync(sentence, cancellationToken.Token);
+      var result = await new NerProcessor(configuration)
+                          .ProcessAsync(sentence, cancellationToken.Token);
 
-            result?.ForEach(p =>
-            {
-                Console.WriteLine("{0}={1}", p.Token, p.Label);
-            });
+      result?.ForEach(p =>
+      {
+         Console.WriteLine("{0}={1}", p.Token, p.Label);
+      });
 
-            Console.WriteLine("");
-            Console.WriteLine("Finished!");
-            Console.ReadLine();
-        }
-    }
+      Console.WriteLine("");
+      Console.WriteLine("Finished!");
+      Console.ReadLine();
+   }
 }

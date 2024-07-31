@@ -1,9 +1,8 @@
-﻿namespace NamedEntityRecognizer.Models
-{
-    internal record TokenizationResult
-    {
-        public string Token { get; init; } = string.Empty;
+namespace NamedEntityRecognizer.Models;
 
-        public string Label { get; init; } = string.Empty;
-    }
+internal record TokenizationResult
+{
+   public string Token { get; init; } = string.Empty;
+
+   public string Label { get; init; } = string.Empty;
 }

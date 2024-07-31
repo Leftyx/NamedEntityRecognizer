@@ -1,20 +1,26 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 
-namespace NamedEntityRecognizer
+namespace NamedEntityRecognizer;
+
+internal abstract class BaseProcessor
 {
-    internal abstract class BaseProcessor
-    {
-        internal static async Task<T?> LoadConfigurationAsync<T>(string path, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path)) return default;
+   internal static readonly JsonSerializerOptions _serializatioOptions = new()
+   {
+      PropertyNameCaseInsensitive = true
+   };
 
+   internal static async Task<T?> LoadConfigurationAsync<T>(string path, CancellationToken cancellationToken = default)
+   {
+      if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+      {
+         return default;
+      }
 
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+      // JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
 
-            using FileStream stream = File.OpenRead(path);
-            {
-                return await JsonSerializer.DeserializeAsync<T>(stream, options, cancellationToken);
-            }
-        }
-    }
+      using FileStream stream = File.OpenRead(path);
+      {
+         return await JsonSerializer.DeserializeAsync<T>(stream, _serializatioOptions, cancellationToken);
+      }
+   }
 }

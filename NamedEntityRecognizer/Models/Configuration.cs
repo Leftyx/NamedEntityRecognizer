@@ -34,11 +34,11 @@ internal sealed class Configuration
    /// <summary>
    /// Number of tokens in the model
    /// For Bert models we should have (tokenizer_config.json):
-   ///     "cls_token": "[CLS]",
+   ///     "cls_token":  "[CLS]",
    ///     "mask_token": "[MASK]",
-   ///     "pad_token": "[PAD]",
-   ///     "sep_token": "[SEP]",
-   ///     "unk_token": "[UNK]"
+   ///     "pad_token":  "[PAD]",
+   ///     "sep_token":  "[SEP]",
+   ///     "unk_token":  "[UNK]"
    /// </summary>
    public int NumberOfTokens { get; set; } = 5;
 }

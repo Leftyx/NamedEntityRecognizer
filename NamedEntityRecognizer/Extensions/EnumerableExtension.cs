@@ -27,4 +27,11 @@ internal static class EnumerableExtension
 
       return values!.IndexOf(values!.Max());
    }
+
+   public static List<int> FindAllIndexOf<T>(this IEnumerable<T> array, Predicate<T> filter)
+   {
+      return array.Select((elementInArray, index) => filter(elementInArray) ? index : -1)
+                  .Where(index => index != -1)
+                  .ToList();
+   }
 }

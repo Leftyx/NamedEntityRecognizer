@@ -1,6 +1,6 @@
 # Named Entity Recognition (NER)
 
-This sample shows how to use a BERT/DistilBERT based ONNX model for Token Classification / NER in [ML.NET](https://dotnet.microsoft.com/en-us/apps/machinelearning-ai/ml-dotnet).
+This sample shows how to use a BERT/DistilBERT based ONNX models for Token Classification / NER in [ML.NET](https://dotnet.microsoft.com/en-us/apps/machinelearning-ai/ml-dotnet).
 
 ## Export a model to ONNX
 
@@ -9,7 +9,7 @@ provided by Hugging Face or:
 
 - Install Python
 
-- Run these scripts: 
+- Install these packages: 
 
 
 ```shell
@@ -18,18 +18,33 @@ pip install optimum[exporters]
 pip install accelerate
 ```
 
-- and finally use the CLI tool `optimum-cli` to export the model:
+- and finally use the installed Optimum CLI tool `optimum-cli` to export the model:
 
 ```shell
 optimum-cli export onnx --model dslim/bert-base-NER bert-base-NER/
 ```
 
-or 
+or
+
 ```shell
-optimum-cli export onnx --model dmargutierrez/distilbert-base-multilingual-cased-mapa_coarse-ner/
+optimum-cli export onnx --model dmargutierrez/distilbert-base-multilingual-cased-mapa_coarse-ner distilbert-base-multilingual-cased-mapa_coarse-ner
 ```
 
+
+> One model which seems to perform much better than others, especially on multiple languages can be found [here](https://huggingface.co/Babelscape/wikineural-multilingual-ner)
+> and it can be downloaded with `optimum-cli` with this:
+>
+> ```shell
+> optimum-cli export onnx --model Babelscape/wikineural-multilingual-ner wikineural-multilingual-ner
+> ```
+>
+> This model is licensed for non-commercial research purposes only.
+
+
 according to the model you want to use.
+
+The ONNX model, the configuration files and the vocabulary will be downloaded in a subfolder with the name of the model from where you are executing
+the CLI.
 
 For my tests I have used a multilingual cased model found [here](https://huggingface.co/dmargutierrez/distilbert-base-multilingual-cased-mapa_coarse-ner).
 
@@ -43,11 +58,11 @@ var configuration = new Configuration(modelPath, numberOfTokens: 5)
 ```
 
 You can use [Netron](https://netron.app/) to check the shape of the input/output of your ONNX model.  
-Once provided your model, select the `input_ids` node on the pane, and check the model properties.
+Once you have provided your model, select the `input_ids` node on the pane, and check the model properties.
 
 ![Netron](./Assets/bert-model.jpg)
 
-If your model has `token_type_ids` defined, simply set the configuration property to true.
+If your model has `token_type_ids` defined, simply set the configuration property to *true*.
 
 The folder where the ONNX model is exported should contain a bunch of files.
 To run this example we need the configuration file `config.json` and the vocabulary `vocab.txt`.

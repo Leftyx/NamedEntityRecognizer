@@ -16,8 +16,6 @@ internal abstract class BaseProcessor
          return default;
       }
 
-      // JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
-
       using FileStream stream = File.OpenRead(path);
       {
          return await JsonSerializer.DeserializeAsync<T>(stream, _serializatioOptions, cancellationToken);

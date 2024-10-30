@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="FastBertTokenizer" Version="1.0.28" />
     <PackageReference Include="Microsoft.ML" Version="3.0.1" />
-    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.19.1" />
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.19.2" />
     <PackageReference Include="Microsoft.ML.OnnxTransformer" Version="3.0.1" />
     <PackageReference Include="Microsoft.ML.Tokenizers" Version="0.21.1" />
     <PackageReference Include="libtorch-cpu-win-x64" Version="2.2.1.1" />

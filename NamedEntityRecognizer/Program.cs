@@ -43,7 +43,7 @@ internal partial class Program
 
       foreach (var token in listOfTokens)
       {
-         Console.WriteLine(">>> Token: {0}", token);
+         Console.WriteLine(">>> Token (PERSON): {0}", token);
       }
 
       Console.WriteLine(new string('-', 80));
@@ -72,7 +72,7 @@ internal partial class Program
 
       foreach (var token in listOfTokens)
       {
-         Console.WriteLine(">>> Token: {0}", token);
+         Console.WriteLine(">>> Token (PERSON): {0}", token);
       }
 
       Console.WriteLine(new string('-', 80));

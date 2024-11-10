@@ -61,45 +61,55 @@ internal sealed class NerProcessor : BaseProcessor
 
       var (inputIds, attentionMask, tokenTypeIds) = tokenizer.Encode(sentence, _configuration.MaximumNumberOfTokens);
 
-      var tensorInputIds = TensorExtensions.ConvertToTensor(inputIds.ToArray(), inputIds.Length);
+      var tokens = inputIds.ToArray();
 
-      var inputs = new List<NamedOnnxValue> {
-             NamedOnnxValue.CreateFromTensor(INPUT_IDS, tensorInputIds),
-             NamedOnnxValue.CreateFromTensor(ATTENTION_MASK, TensorExtensions.ConvertToTensor(attentionMask.ToArray(), inputIds.Length)),
-         };
+      using var inputIdsOrtValue = OrtValue.CreateTensorValueFromMemory(tokens, [1, inputIds.Length]);
+
+      using var attentionMaskOrtValue = OrtValue.CreateTensorValueFromMemory(attentionMask.ToArray(), [1, attentionMask.Length]);
+
+      var inputs = new Dictionary<string, OrtValue>
+      {
+         { INPUT_IDS, inputIdsOrtValue },
+         { ATTENTION_MASK, attentionMaskOrtValue },
+      };
 
       if (_configuration.HasTokenTypeIds)
       {
-         inputs.Add(NamedOnnxValue.CreateFromTensor(TOKEN_TYPE_IDS, TensorExtensions.ConvertToTensor(tokenTypeIds.ToArray()!, inputIds.Length)));
+         using var tokenTypeIdsOrtValue = OrtValue.CreateTensorValueFromMemory(tokenTypeIds.ToArray(), [1, tokenTypeIds.Length]);
+
+         inputs.Add(TOKEN_TYPE_IDS, tokenTypeIdsOrtValue);
       }
+
+      using var runOptions = new RunOptions();
 
       using (InferenceSession session = new(bertModel))
       {
-         var output = session.Run(inputs);
-
-         if (output?.Count > 0)
+         using (var output = session.Run(runOptions, inputs, session.OutputNames))
          {
-            var batchedResult = (output.ToList().FirstOrDefault()?.Value as IEnumerable<float>)
-                ?.Chunk(labelsCount)
-                ?.Select(y => y.ArgMax());
-
-            if (batchedResult?.Count() == 0)
+            if (output?.Count > 0)
             {
-               return result;
-            }
+               ReadOnlySpan<float> outputData = output[0].GetTensorDataAsSpan<float>();
 
-            var predictedLabels = batchedResult?.Select(res => configuration.IdTolabel?[res.ToString()]);
+               var batchedResult = outputData.GetMaxValueIndexForChunks(labelsCount);
 
-            result = predictedLabels?.Zip(tensorInputIds, (label, value) =>
-            {
-               return new TokenizationResult
+               if (batchedResult?.Count == 0)
                {
-                  Token = tokenizer.Decode([0, value])[_configuration.NumberOfTokens..],
-                  Label = label ?? string.Empty,
-               };
-            })
-            ?.Where(x => x.Label != LABEL_NO_ENTITY)
-            ?.ToList();
+                  return result;
+               }
+
+               var predictedLabels = batchedResult?.Select(res => configuration.IdTolabel?[res.ToString()]);
+
+               result = predictedLabels?.Zip(tokens, (label, value) =>
+               {
+                  return new TokenizationResult
+                  {
+                     Token = tokenizer.Decode([0, value])[_configuration.NumberOfTokens..],
+                     Label = label ?? string.Empty,
+                  };
+               })
+               ?.Where(x => x.Label != LABEL_NO_ENTITY)
+               ?.ToList();
+            }
          }
       }
 

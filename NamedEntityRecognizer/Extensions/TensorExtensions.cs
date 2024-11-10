@@ -4,6 +4,7 @@ namespace NamedEntityRecognizer.Extensions;
 
 internal static class TensorExtensions
 {
+   [Obsolete]
    public static Tensor<long> ConvertToTensor(long[] inputArray, int dimension)
    {
       Tensor<long> input = new DenseTensor<long>([1, dimension]);

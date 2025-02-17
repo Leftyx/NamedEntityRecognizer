@@ -67,6 +67,8 @@ internal sealed class NerProcessor : BaseProcessor
 
       using var attentionMaskOrtValue = OrtValue.CreateTensorValueFromMemory(attentionMask.ToArray(), [1, attentionMask.Length]);
 
+      using var tokenTypeIdsOrtValue = OrtValue.CreateTensorValueFromMemory(tokenTypeIds.ToArray(), [1, tokenTypeIds.Length]);
+
       var inputs = new Dictionary<string, OrtValue>
       {
          { INPUT_IDS, inputIdsOrtValue },
@@ -75,8 +77,6 @@ internal sealed class NerProcessor : BaseProcessor
 
       if (_configuration.HasTokenTypeIds)
       {
-         using var tokenTypeIdsOrtValue = OrtValue.CreateTensorValueFromMemory(tokenTypeIds.ToArray(), [1, tokenTypeIds.Length]);
-
          inputs.Add(TOKEN_TYPE_IDS, tokenTypeIdsOrtValue);
       }
 

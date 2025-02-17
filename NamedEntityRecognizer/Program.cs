@@ -17,6 +17,7 @@ internal partial class Program
 
       Console.WriteLine("");
       Console.WriteLine("Finished!");
+
       Console.ReadLine();
    }
 

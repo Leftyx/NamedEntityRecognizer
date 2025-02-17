@@ -16,7 +16,7 @@ insert_final_newline = true
 
 # Xml project files
 [*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
-indent_size = 2
+indent_size = 3
 
 # Xml config files
 [*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
@@ -85,6 +85,7 @@ csharp_style_var_elsewhere = false:silent
 
 # IDE0008: Use explicit type
 dotnet_diagnostic.IDE0008.severity = silent
+csharp_prefer_system_threading_lock = true:suggestion
 
 [*.{cs,vb}]
 #### Naming styles ####
@@ -166,3 +167,4 @@ dotnet_style_qualification_for_property = false:silent
 dotnet_style_qualification_for_method = false:silent
 dotnet_style_qualification_for_event = false:silent
 insert_final_newline = false
+tab_width = 4
